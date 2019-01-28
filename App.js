@@ -1,9 +1,10 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import React, { Fragment } from 'react';
+import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 
 import Loading from './src/Components/loading';
 import GamesList from './src/Routes/Games';
+import AppBar from './src/Components/appbar';
 
 export default class App extends React.Component {
   constructor() {
@@ -38,11 +39,16 @@ export default class App extends React.Component {
     console.log(items[1]);
 
     return (
-      <SafeAreaView style={styles.container}>
-        <GamesList
-          data={items}
-        />
-      </SafeAreaView>
+      <Fragment>
+        <StatusBar translucent barStyle="light-content" />
+        <SafeAreaView style={{flex: 0, backgroundColor: '#f47b2b'}}/>
+        <SafeAreaView style={styles.container}>
+          <AppBar />
+          <GamesList
+            data={items}
+          />
+        </SafeAreaView>
+      </Fragment>
     );
   }
 }
