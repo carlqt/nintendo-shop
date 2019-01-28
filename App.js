@@ -17,7 +17,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await getGamesAmerica();
+      const response = await getGamesAmerica({}, 0)
       this.setState({
         items: response,
         loading: false,
