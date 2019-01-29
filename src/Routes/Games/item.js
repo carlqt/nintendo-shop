@@ -7,13 +7,16 @@ import {
 } from 'react-native';
 
 import Header from 'src/Components/headers';
-import Image from 'src/Components/Image';
+import ImageItem from './image_item';
 
 export default class Item extends PureComponent {
   onPress = () => {
-    const { onItemPress, title } = this.props;
+    const { onItemPress, title, id } = this.props;
 
-    onItemPress(title);
+    onItemPress({
+      title,
+      id,
+    });
   }
 
   render() {
@@ -31,7 +34,7 @@ export default class Item extends PureComponent {
     return(
       <TouchableOpacity key={id} style={styles.itemContainer} onPress={this.onPress}>
         <View style={styles.imageContainer}>
-          <Image
+          <ImageItem
             salePercent={salePercentage}
             source={gameArt}
           />

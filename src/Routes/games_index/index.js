@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 
 import Loading from 'src/Components/loading';
-import AppBar from 'src/Components/appbar';
 import GamesList from 'src/Routes/Games';
 
 export default class App extends React.Component {
@@ -39,10 +38,10 @@ export default class App extends React.Component {
     }
   }
 
-  onItemPress = (title) => {
+  onItemPress = (item) => {
     const { navigate } = this.props.navigation;
 
-    navigate('Info', { title });
+    navigate('Info', item);
   }
 
   render() {

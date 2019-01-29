@@ -1,0 +1,1 @@
+export const gameInfoURL = "https://www.nintendo.com/json/content/get/game"
