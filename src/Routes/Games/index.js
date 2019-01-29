@@ -9,6 +9,7 @@ export default class GamesList extends Component {
   keyExtractor = (item) => item.id;
 
   renderItem = ({item}) => {
+    const { onItemPress } = this.props;
     const {
       front_box_art: gameArt,
       eshop_price: originalPrice,
@@ -33,6 +34,7 @@ export default class GamesList extends Component {
           currentPrice,
           salePercentage,
           id,
+          onItemPress,
         }}
       />
     )

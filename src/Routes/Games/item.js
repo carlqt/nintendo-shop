@@ -10,6 +10,12 @@ import Header from 'src/Components/headers';
 import Image from 'src/Components/Image';
 
 export default class Item extends PureComponent {
+  onPress = () => {
+    const { onItemPress, title } = this.props;
+
+    onItemPress(title);
+  }
+
   render() {
     const {
       gameArt,
@@ -23,7 +29,7 @@ export default class Item extends PureComponent {
     } = this.props;
 
     return(
-      <TouchableOpacity key={id} style={styles.itemContainer}>
+      <TouchableOpacity key={id} style={styles.itemContainer} onPress={this.onPress}>
         <View style={styles.imageContainer}>
           <Image
             salePercent={salePercentage}
