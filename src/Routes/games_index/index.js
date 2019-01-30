@@ -1,9 +1,22 @@
 import React, { Fragment } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Loading from 'src/Components/loading';
 import GamesList from 'src/Routes/Games';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F7F7F7',
+  },
+  searchbar: {
+    width: 120,
+    height: 30,
+    borderRadius: 8,
+  },
+});
 
 export default class App extends React.Component {
   constructor() {
@@ -23,7 +36,11 @@ export default class App extends React.Component {
     headerTitleStyle: {
       color: 'white',
     },
-    title: "Home"
+    headerRight: (
+      <TouchableOpacity style={{paddingHorizontal: 9}}>
+        <Icon color="white" size={20} name="search" />
+      </TouchableOpacity>
+    ),
   };
 
   async componentDidMount() {
@@ -65,10 +82,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F7F7F7',
-  },
-});
