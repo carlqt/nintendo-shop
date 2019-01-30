@@ -7,7 +7,9 @@ const AppNavigator = createStackNavigator(
     Home: GamesIndex,
     Info: GameInfoScreen,
   },
-  { initialRouteName: "Home" }
+  {
+    initialRouteName: "Home",
+  }
 );
 
 export default createAppContainer(AppNavigator);

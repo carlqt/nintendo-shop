@@ -7,15 +7,25 @@ import {
 } from 'react-native';
 
 import Header from 'src/Components/headers';
-import ImageItem from './image_item';
+import ImageItem from 'src/Routes/Games/image_item';
 
 export default class Item extends PureComponent {
   onPress = () => {
-    const { onItemPress, title, id } = this.props;
+    const { 
+      onItemPress,
+      title,
+      id,
+      salePrice,
+      originalPrice,
+      salePercentage,
+    } = this.props;
 
     onItemPress({
       title,
       id,
+      salePrice,
+      originalPrice,
+      salePercentage,
     });
   }
 

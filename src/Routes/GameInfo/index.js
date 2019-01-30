@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { ScrollView ,StyleSheet, Text, View } from 'react-native';
 
-import Loading from 'src/Components/loading';
 import { getGameInfo } from 'src/Actions';
-import Hero from './hero';
+import Loading from 'src/Components/loading';
+import Contents from './Contents';
 
 export default class GameInfo extends React.Component {
   constructor() {
@@ -35,14 +35,8 @@ export default class GameInfo extends React.Component {
     const title = navigation.getParam('title', 'Game Info')
 
     return {
-      title,
       headerTintColor: 'white',
-      headerStyle: {
-        backgroundColor: '#f47b2b',
-      },
-      headerTitleStyle: {
-        color: 'white',
-      },
+      headerTransparent: true,
     };
   }
 
@@ -53,14 +47,12 @@ export default class GameInfo extends React.Component {
       return <Loading />;
     }
 
-    const { large_icon: largeIcon } = game;
-
     return(
-      <View styles={styles.container}>
-        <Hero
-          source={largeIcon}
+      <ScrollView style={styles.container}>
+        <Contents
+          { ...game }
         />
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -68,6 +60,6 @@ export default class GameInfo extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F7F7',
+    // backgroundColor: '#F7F7F7',
   },
 });

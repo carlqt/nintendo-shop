@@ -16,6 +16,7 @@ export default class App extends React.Component {
   }
 
   static navigationOptions = {
+    headerBackTitle: null,
     headerStyle: {
       backgroundColor: '#f47b2b',
     },
@@ -27,7 +28,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await getGamesAmerica({}, 0)
+      const response = await getGamesAmerica({}, 190)
       this.setState({
         items: response,
         loading: false,
@@ -50,8 +51,6 @@ export default class App extends React.Component {
     if (loading) {
       return <Loading />;
     }
-
-    console.log(items[1]);
 
     return (
       <Fragment>

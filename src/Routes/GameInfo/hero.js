@@ -5,16 +5,17 @@ import Image from 'src/Components/Image';
 const Hero = (props) => {
   const { source } = props;
 
+  if (source) {
+    return (
+      <Image
+        style={styles.image}
+        source={source.image.url}
+      />
+    )
+  }
+
   return(
     <View style={styles.hero}>
-      {
-        source ? 
-        <Image
-          style={styles.image}
-          source={source.image.url}
-        /> :
-        null
-      }
     </View>
   )
 }
@@ -26,7 +27,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   image: {
-    flex: 1,
+    height: 250,
+    width: '100%',
   },
 })
 
