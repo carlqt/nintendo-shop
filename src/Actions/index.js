@@ -23,7 +23,7 @@ export async function searchGame(str) {
   try {
     const queryParams = {
       page: 0,
-      hitsPerPage: 6,
+      hitsPerPage: 9,
       query: str,
       getRankingInfo: false,
     }

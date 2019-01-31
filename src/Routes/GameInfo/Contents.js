@@ -1,15 +1,20 @@
 import React, { Fragment, PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Chip } from 'react-native-paper';
+import { Badge } from 'react-native-elements'
+import Colors from 'src/Lib/Colors';
 
 import Hero from './hero';
 
 export default class Contents extends PureComponent {
   renderCategory = ({title}) => {
     return(
-      <Chip style={styles.chip} key={title}>
-        { title }
-      </Chip>
+      <Badge
+        badgeStyle={styles.badge}
+        textStyle={styles.badgeText}
+        key={title}
+        value={title}
+        status="primary"
+      />
     );
   }
 
@@ -48,7 +53,16 @@ export default class Contents extends PureComponent {
                 Categories
               </Text>
               <View style={styles.chipContainer}>
-                { categories.map(this.renderCategory) }
+                {
+                  Array.isArray(categories) ?
+                    categories.map(this.renderCategory) :
+                    <Badge
+                      badgeStyle={styles.badge}
+                      textStyle={styles.badgeText}
+                      value={categories.title}
+                      status="primary"
+                    />
+                }
               </View>
             </View>
 
@@ -96,9 +110,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 8,
   },
-  chip: {
-    alignSelf: 'flex-start',
-    flex: -1,
-    marginHorizontal: 2,
+  badge: {
+    padding: 2,
+    backgroundColor: Colors.NINTENDO_ORANGE,
+  },
+  badgeText: {
+    fontWeight: '600',
   },
 });

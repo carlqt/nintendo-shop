@@ -23,9 +23,6 @@ export default class Item extends PureComponent {
     onItemPress({
       title,
       id,
-      salePrice,
-      originalPrice,
-      salePercentage,
     });
   }
 
