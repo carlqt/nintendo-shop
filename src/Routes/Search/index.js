@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { searchGame } from 'src/Actions';
 import { SearchBar } from 'react-native-elements';
 import { debounce } from 'throttle-debounce';
@@ -64,7 +64,7 @@ export default class Search extends React.Component {
         <SearchBar
           placeholder="Title"
           cancelButtonTitle="Cancel"
-          platform="ios"
+          platform={Platform.OS}
           value={value}
           onChangeText={this.handleTextChange}
           onCancel={this.onCancel}
