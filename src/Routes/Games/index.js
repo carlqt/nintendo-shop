@@ -22,7 +22,6 @@ export default class GamesList extends Component {
     const currentPrice = salePrice || originalPrice
     const salePercentage = parseInt(((originalPrice - currentPrice) / originalPrice) * 100)
 
-
     return(
       <Item
         {...{
@@ -41,7 +40,7 @@ export default class GamesList extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, fetchNextGames } = this.props;
 
     return(
       <FlatList
@@ -49,6 +48,8 @@ export default class GamesList extends Component {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
         style={{flex: 1}}
+        onEndReached={fetchNextGames}
+        onEndReachedThreshold={20}
       />
     );
   }

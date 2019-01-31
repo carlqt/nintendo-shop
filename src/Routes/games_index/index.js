@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
-import { getGamesAmerica } from 'nintendo-switch-eshop';
+import { getGames } from 'src/Actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Loading from 'src/Components/loading';
@@ -23,7 +23,7 @@ export default class App extends React.Component {
     super();
 
     this.state = {
-      items: [],
+      games: [],
       loading: true,
     }
   }
@@ -54,10 +54,12 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await getGamesAmerica({}, 190)
+      const response = await getGames();
       this.props.navigation.setParams({ toggleSearchBar: this.toggleSearchBar });
+
+      const games = this.handleGetGamesResponse(response);
       this.setState({
-        items: response,
+        games,
         loading: false,
       })
 
@@ -66,14 +68,35 @@ export default class App extends React.Component {
     }
   }
 
+  handleGetGamesResponse = (response) => {
+    const { games: { game } } = response;
+
+    if (Array.isArray(game)) {
+      return game;
+    }
+
+    return [game];
+  }
+
   onItemPress = (item) => {
     const { navigate } = this.props.navigation;
 
     navigate('Info', item);
   }
 
+  fetchNextGames = async () => {
+    const { games } = this.state;
+    const offset = games.length;
+
+    const response = await getGames({offset});
+    const handledResponse = this.handleGetGamesResponse(response);
+    this.setState({
+      games: games.concat(handledResponse),
+    })
+  }
+
   render() {
-    const { items, loading } = this.state;
+    const { games, loading } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -83,8 +106,9 @@ export default class App extends React.Component {
       <SafeAreaView style={styles.container}>
         <StatusBar translucent backgroundColor='#f47b2b' barStyle="light-content" />
         <GamesList
+          fetchNextGames={this.fetchNextGames}
           onItemPress={this.onItemPress}
-          data={items}
+          data={games}
         />
       </SafeAreaView>
     );

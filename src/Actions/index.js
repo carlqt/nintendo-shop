@@ -3,8 +3,26 @@ import {
   ALGOLIA_API_KEY,
   ALGOLIA_APP_ID,
   gamesIndexUrl,
-  allResultsUrl,
+  gamesListURL,
+  defaultFilterParams,
 } from './constants';
+
+export async function getGames(params = {}) {
+  try {
+    const urlParams = {
+      ...defaultFilterParams,
+      ...params,
+    };
+
+    const url = `${gamesListURL}?${encodedParams(urlParams)}`
+    const response = await fetch(url);
+    const jsonResponse = await response.json();
+
+    return jsonResponse;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export async function getGameInfo(id) {
   try {
