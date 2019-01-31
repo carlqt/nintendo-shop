@@ -1,4 +1,10 @@
-import { gameInfoURL } from './constants';
+import {
+  gameInfoURL,
+  ALGOLIA_API_KEY,
+  ALGOLIA_APP_ID,
+  gamesIndexUrl,
+  allResultsUrl,
+} from './constants';
 
 export async function getGameInfo(id) {
   try {
@@ -11,4 +17,43 @@ export async function getGameInfo(id) {
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function searchGame(str) {
+  try {
+    const queryParams = {
+      page: 0,
+      hitsPerPage: 6,
+      query: str,
+      getRankingInfo: false,
+    }
+    const config = {
+      headers: new Headers({
+        'X-Algolia-API-Key': ALGOLIA_API_KEY,
+        'X-Algolia-Application-Id': ALGOLIA_APP_ID,
+      })
+    }
+    const urlWithParams = `${gamesIndexUrl}?${encodedParams(queryParams)}`
+
+    const response = await fetch(urlWithParams, config);
+    const jsonResponse = await response.json();
+
+    return jsonResponse.hits.filter(switchGames);
+  } catch (e) {
+    // throw error
+    console.log('ERROR');
+    console.log(e);
+  }
+}
+
+function encodedParams(params) {
+  const query = Object.keys(params)
+      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+      .join('&');
+
+  return query;
+}
+
+function switchGames({system_title}) {
+  return system_title === 'Nintendo Switch';
 }
