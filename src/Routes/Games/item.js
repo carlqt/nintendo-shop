@@ -35,7 +35,7 @@ export default class Item extends PureComponent {
       currentPrice,
     } = this.props;
 
-    return(
+    return (
       <TouchableOpacity key={id} style={styles.itemContainer} onPress={this.onPress}>
         <View style={styles.imageContainer}>
           <ImageItem

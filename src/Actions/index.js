@@ -65,23 +65,23 @@ export async function searchGame(str) {
   }
 }
 
+function encodeParams(val) {
+  if (FILTER_PARAMS.includes(val)) {
+    return this[val].map(v => `${encodeURIComponent(val)}=${encodeURIComponent(v)}`);
+  }
+
+  return `${encodeURIComponent(val)}=${encodeURIComponent(this[val])}`;
+}
+
 function encodedParams(params) {
   const query = Object.keys(params)
     .map(encodeParams, params)
     .flat()
-    .join('&')
+    .join('&');
 
   return query;
 }
 
-function switchGames({system_title}) {
-  return system_title === 'Nintendo Switch';
-}
-
-function encodeParams(val) {
-  if (FILTER_PARAMS.includes(val)) {
-    return this[val].map(v => encodeURIComponent(val) + '=' + encodeURIComponent(v))
-  };
-
-  return encodeURIComponent(val) + '=' + encodeURIComponent(this[val]);
+function switchGames({ system_title: systemTitle }) {
+  return systemTitle === 'Nintendo Switch';
 }

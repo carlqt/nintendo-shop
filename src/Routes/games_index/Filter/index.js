@@ -19,7 +19,7 @@ export default class Filter extends Component {
     const { categories } = this.state;
 
     this.setState({
-      categories: categories.filter(c => c.value !== category.value),
+      categories: categories.filter(c => c !== category),
     });
   }
 
@@ -33,8 +33,11 @@ export default class Filter extends Component {
 
   applyFilter = () => {
     const { applyFilter, onBackdropPress } = this.props;
+    const {
+      categories: category,
+    } = this.state;
 
-    applyFilter(this.state);
+    applyFilter({ category });
     onBackdropPress();
   }
 
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    padding: 8,
+    paddingVertical: 8,
     borderBottomWidth: 1,
     borderColor: '#e1e8ee',
   },

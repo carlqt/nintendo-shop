@@ -1,38 +1,39 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Colors from 'src/Lib/Colors';
+import { CATEGORIES } from './Constants';
 
 export default class Category extends PureComponent {
   toggleCategory = () => {
     const {
       onPress,
       value,
-      display,
     } = this.props;
 
-    onPress({ value, display });
+    onPress(value);
   }
 
   render() {
-    const { selected, value, display } = this.props;
+    const { selected, value } = this.props;
+    const display = CATEGORIES[value];
 
-    return(
+    return (
       <TouchableOpacity
         onPress={this.toggleCategory}
         style={[styles.chip, selected && styles.selected]}
-        key={value}
       >
         <Text style={[selected && styles.selectedText]}>{display}</Text>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   chip: {
     alignSelf: 'flex-start',
-    padding: 8,
-    margin: 6,
+    padding: 7,
+    marginVertical: 2,
+    marginRight: 4,
     backgroundColor: '#e0e0e0',
     borderRadius: 12,
   },

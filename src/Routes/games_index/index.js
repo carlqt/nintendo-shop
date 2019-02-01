@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, TouchableOpacity, View } from 'react-native';
 import { getGames } from 'src/Actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -58,31 +58,36 @@ export default class App extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     try {
-      const response = await getGames();
       this.props.navigation.setParams({ toggleSearchBar: this.toggleSearchBar });
       this.props.navigation.setParams({ showFilterScreen: this.showFilterScreen });
-
-      const games = this.handleGetGamesResponse(response);
-      this.setState({
-        games,
-        loading: false,
-      })
-
+      this.loadGames();
     } catch (e) {
       console.log(e);
     }
+  }
+
+  loadGames = async (params = {}) => {
+    const response = await getGames(params);
+    const games = this.handleGetGamesResponse(response);
+    this.setState({
+      games,
+      loading: false,
+    });
+  }
+
+  applyFilter = async (filters) => {
+    this.setState({ filters, loading: true });
+    this.loadGames({
+      ...filters,
+    });
   }
 
   showFilterScreen = () => {
     this.setState({
       showFilterScreen: true,
     });
-  }
-
-  applyFilter = (filters) => {
-    this.setState({ filters });
   }
 
   toggleSearchBar = () => {
@@ -103,20 +108,24 @@ export default class App extends React.Component {
   onItemPress = (item) => {
     const { navigate } = this.props.navigation;
 
+    console.log(item);
     navigate('Info', item);
   }
 
   closeFilter = () => {
     this.setState({
       showFilterScreen: false,
-    })
+    });
   }
 
   fetchNextGames = async () => {
-    const { games } = this.state;
+    const { games, filters } = this.state;
     const offset = games.length;
 
-    const response = await getGames({ offset });
+    const response = await getGames({
+      offset,
+      ...filters,
+    });
     const handledResponse = this.handleGetGamesResponse(response);
     this.setState({
       games: games.concat(handledResponse),

@@ -6,9 +6,9 @@ import {
 import Item from './item';
 
 export default class GamesList extends Component {
-  keyExtractor = (item) => item.id;
+  keyExtractor = item => item.id;
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     const { onItemPress } = this.props;
     const {
       front_box_art: gameArt,
@@ -19,10 +19,10 @@ export default class GamesList extends Component {
       id,
     } = item;
 
-    const currentPrice = salePrice || originalPrice
-    const salePercentage = parseInt(((originalPrice - currentPrice) / originalPrice) * 100)
+    const currentPrice = salePrice || originalPrice;
+    const salePercentage = parseInt(((originalPrice - currentPrice) / originalPrice) * 100, 10);
 
-    return(
+    return (
       <Item
         {...{
           gameArt,
@@ -36,20 +36,18 @@ export default class GamesList extends Component {
           onItemPress,
         }}
       />
-    )
+    );
   }
 
   render() {
     const { data, fetchNextGames } = this.props;
 
-    return(
+    return (
       <FlatList
         {...{ data }}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
-        style={{flex: 1}}
         onEndReached={fetchNextGames}
-        onEndReachedThreshold={20}
       />
     );
   }
