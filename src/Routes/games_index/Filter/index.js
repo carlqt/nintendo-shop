@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Overlay, Divider } from 'react-native-elements';
+import { Overlay, Button } from 'react-native-elements';
 
 import Categories from './Categories';
 
@@ -10,7 +10,7 @@ export default class Filter extends Component {
 
     this.state = {
       categories: [],
-    }
+    };
   }
 
   removeCategory = (category) => {
@@ -18,7 +18,7 @@ export default class Filter extends Component {
 
     this.setState({
       categories: categories.filter(c => c.value != category.value)
-    })
+    });
   }
 
   addCategory = (category) => {
@@ -26,11 +26,11 @@ export default class Filter extends Component {
 
     this.setState({
       categories: categories.concat(category)
-    })
+    });
   }
 
   render() {
-    const { isVisible, onBackdropPress } = this.props
+    const { isVisible, onBackdropPress } = this.props;
     const { categories } = this.state;
 
     return(
@@ -41,15 +41,26 @@ export default class Filter extends Component {
           <View style={styles.headerContainer}>
             <Text style={styles.headerText}>Filter</Text>
           </View>
-          <Divider style={{width: '100%'}} />
           <Categories
             addCategory={this.addCategory}
             removeCategory={this.removeCategory}
             {...{ categories }}
           />
+          <View style={styles.footer}>
+            <View style={styles.footerFlexContainer}>
+              <Button title="Apply" type="solid" raised />
+              <Button
+                raised
+                onPress={onBackdropPress}
+                containerStyle={{ marginHorizontal: 4 }}
+                title="Cancel"
+                type="outline"
+              />
+            </View>
+          </View>
         </View>
       </Overlay>
-    )
+    );
   }
 }
 
@@ -59,12 +70,23 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     padding: 8,
+    borderBottomWidth: 1,
+    borderColor: '#e1e8ee',
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: 14,
   },
-  included: {
-    backgroundColor: '#2196f3',
-  }
-})
+  footer: {
+    borderTopWidth: 1,
+    borderColor: '#e1e8ee',
+    justifyContent: 'flex-end',
+    height: 50,
+    paddingTop: 2,
+  },
+  footerFlexContainer: {
+    flex: 1,
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+  },
+});

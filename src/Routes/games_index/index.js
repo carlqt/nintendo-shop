@@ -52,7 +52,7 @@ export default class App extends React.Component {
       games: [],
       loading: true,
       showFilterScreen: false,
-    }
+    };
   }
 
   async componentDidMount() {
