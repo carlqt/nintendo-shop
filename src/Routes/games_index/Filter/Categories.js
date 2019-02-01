@@ -5,7 +5,7 @@ import Category from './Category';
 
 export default class Categories extends PureComponent {
   toggleCategory = (category) => {
-    const { categories, addCategory, removeCategory } = this.props;
+    const { addCategory, removeCategory } = this.props;
 
     if (this.isSelected(category)) {
       return removeCategory(category);
@@ -105,5 +105,5 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: '600',
-  }
-})
+  },
+});

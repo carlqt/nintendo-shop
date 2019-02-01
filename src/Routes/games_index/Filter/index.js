@@ -5,11 +5,13 @@ import { Overlay, Button } from 'react-native-elements';
 import Categories from './Categories';
 
 export default class Filter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { appliedFilters: { categories }} = props;
 
     this.state = {
-      categories: [],
+      categories,
     };
   }
 
@@ -17,7 +19,7 @@ export default class Filter extends Component {
     const { categories } = this.state;
 
     this.setState({
-      categories: categories.filter(c => c.value != category.value)
+      categories: categories.filter(c => c.value !== category.value),
     });
   }
 
@@ -29,13 +31,23 @@ export default class Filter extends Component {
     });
   }
 
+  applyFilter = () => {
+    const { applyFilter, onBackdropPress } = this.props;
+
+    applyFilter(this.state);
+    onBackdropPress();
+  }
+
   render() {
-    const { isVisible, onBackdropPress } = this.props;
+    const {
+      onBackdropPress,
+    } = this.props;
     const { categories } = this.state;
 
-    return(
+    return (
       <Overlay
-        {...{ isVisible, onBackdropPress }}
+        isVisible
+        {...{ onBackdropPress }}
       >
         <View style={styles.container}>
           <View style={styles.headerContainer}>
@@ -48,7 +60,12 @@ export default class Filter extends Component {
           />
           <View style={styles.footer}>
             <View style={styles.footerFlexContainer}>
-              <Button title="Apply" type="solid" raised />
+              <Button
+                raised
+                title="Apply"
+                type="solid"
+                onPress={this.applyFilter}
+              />
               <Button
                 raised
                 onPress={onBackdropPress}

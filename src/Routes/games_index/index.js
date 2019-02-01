@@ -49,6 +49,9 @@ export default class App extends React.Component {
     super();
 
     this.state = {
+      filters: {
+        categories: [],
+      },
       games: [],
       loading: true,
       showFilterScreen: false,
@@ -76,6 +79,10 @@ export default class App extends React.Component {
     this.setState({
       showFilterScreen: true,
     });
+  }
+
+  applyFilter = (filters) => {
+    this.setState({ filters });
   }
 
   toggleSearchBar = () => {
@@ -109,15 +116,37 @@ export default class App extends React.Component {
     const { games } = this.state;
     const offset = games.length;
 
-    const response = await getGames({offset});
+    const response = await getGames({ offset });
     const handledResponse = this.handleGetGamesResponse(response);
     this.setState({
       games: games.concat(handledResponse),
-    })
+    });
+  }
+
+  renderFilterScreen = () => {
+    const {
+      showFilterScreen,
+      filters,
+    } = this.state;
+
+    if (!showFilterScreen) {
+      return null;
+    }
+
+    return (
+      <Filter
+        appliedFilters={filters}
+        applyFilter={this.applyFilter}
+        onBackdropPress={this.closeFilter}
+      />
+    );
   }
 
   render() {
-    const { games, loading, showFilterScreen } = this.state;
+    const {
+      games,
+      loading,
+    } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -131,10 +160,7 @@ export default class App extends React.Component {
           onItemPress={this.onItemPress}
           data={games}
         />
-        <Filter
-          onBackdropPress={this.closeFilter}
-          isVisible={showFilterScreen}
-        />
+        { this.renderFilterScreen() }
       </SafeAreaView>
     );
   }
