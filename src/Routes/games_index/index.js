@@ -108,7 +108,6 @@ export default class App extends React.Component {
   onItemPress = (item) => {
     const { navigate } = this.props.navigation;
 
-    console.log(item);
     navigate('Info', item);
   }
 

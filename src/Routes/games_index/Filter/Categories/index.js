@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Category from './Category';
 import {
   CATEGORIES,
-} from './Constants';
+} from '../Constants';
 
 export default class Categories extends PureComponent {
   toggleCategory = (category) => {
