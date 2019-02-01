@@ -15,9 +15,6 @@ export default class Item extends PureComponent {
       onItemPress,
       title,
       id,
-      salePrice,
-      originalPrice,
-      salePercentage,
     } = this.props;
 
     onItemPress({
@@ -57,7 +54,15 @@ export default class Item extends PureComponent {
               null
             }
 
-            <Text style={[salePrice && styles.saleItem]}>${currentPrice}</Text>
+            {
+              currentPrice ?
+              <Text style={[salePrice && styles.saleItem]}>
+                ${ currentPrice }
+              </Text> :
+              <Text style={styles.unavailable}>
+                UNAVAILABLE
+              </Text>
+            }
           </View>
         </View>
       </TouchableOpacity>
@@ -100,4 +105,11 @@ const styles = StyleSheet.create({
   releaseDate: {
     color: '#999',
   },
+  unavailable: {
+    backgroundColor: 'red',
+    color: 'white',
+    fontWeight: '600',
+    alignSelf: 'flex-start',
+    padding: 3,
+  }
 });
