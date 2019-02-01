@@ -1,7 +1,8 @@
 import {
-  gameInfoURL,
+  FILTER_PARAMS,
   ALGOLIA_API_KEY,
   ALGOLIA_APP_ID,
+  gameInfoURL,
   gamesIndexUrl,
   gamesListURL,
   defaultFilterParams,
@@ -66,12 +67,21 @@ export async function searchGame(str) {
 
 function encodedParams(params) {
   const query = Object.keys(params)
-      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-      .join('&');
+    .map(encodeParams, params)
+    .flat()
+    .join('&')
 
   return query;
 }
 
 function switchGames({system_title}) {
   return system_title === 'Nintendo Switch';
+}
+
+function encodeParams(val) {
+  if (FILTER_PARAMS.includes(val)) {
+    return this[val].map(v => encodeURIComponent(val) + '=' + encodeURIComponent(v))
+  };
+
+  return encodeURIComponent(val) + '=' + encodeURIComponent(this[val]);
 }

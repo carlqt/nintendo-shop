@@ -50,7 +50,7 @@ export default class App extends React.Component {
 
     this.state = {
       filters: {
-        categories: [],
+        category: [],
       },
       games: [],
       loading: true,

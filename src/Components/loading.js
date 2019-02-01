@@ -1,12 +1,14 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import Colors from 'src/Lib/Colors';
+
 const Loading = () => {
   return(
     <View style={styles.container}>
       <ActivityIndicator
         size="large"
-        color="red"
+        color={Colors.NINTENDO_ORANGE}
       />
     </View>
   )

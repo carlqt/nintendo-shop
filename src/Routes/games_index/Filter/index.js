@@ -8,10 +8,10 @@ export default class Filter extends Component {
   constructor(props) {
     super(props);
 
-    const { appliedFilters: { categories }} = props;
+    const { appliedFilters: { category }} = props;
 
     this.state = {
-      categories,
+      categories: category,
     };
   }
 
@@ -27,7 +27,7 @@ export default class Filter extends Component {
     const { categories } = this.state;
 
     this.setState({
-      categories: categories.concat(category)
+      categories: categories.concat(category),
     });
   }
 
