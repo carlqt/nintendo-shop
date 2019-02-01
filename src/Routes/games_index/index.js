@@ -1,10 +1,11 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { getGames } from 'src/Actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Loading from 'src/Components/loading';
 import GamesList from 'src/Routes/Games';
+import Filter from './Filter';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,11 +26,13 @@ export default class App extends React.Component {
     this.state = {
       games: [],
       loading: true,
+      showFilterScreen: false,
     }
   }
 
   static navigationOptions = ({navigation}) => {
     const toggleSearchBar = navigation.getParam('toggleSearchBar', null);
+    const showFilterScreen = navigation.getParam('showFilterScreen', null);
 
     return {
       headerBackTitle: null,
@@ -40,11 +43,24 @@ export default class App extends React.Component {
         color: 'white',
       },
       headerRight: (
-        <TouchableOpacity onPress={toggleSearchBar} style={{paddingHorizontal: 9}}>
-          <Icon color="white" size={20} name="search" />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={showFilterScreen} style={{paddingHorizontal: 9}}>
+            <Icon color="white" size={20} name="filter" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleSearchBar} style={{paddingHorizontal: 9}}>
+            <Icon color="white" size={20} name="search" />
+          </TouchableOpacity>
+        </View>
       ),
     }
+  }
+
+  showFilterScreen = () => {
+    const { showFilterScreen } = this.state;
+
+    this.setState({
+      showFilterScreen: true,
+    });
   }
 
   toggleSearchBar = () => {
@@ -56,6 +72,7 @@ export default class App extends React.Component {
     try {
       const response = await getGames();
       this.props.navigation.setParams({ toggleSearchBar: this.toggleSearchBar });
+      this.props.navigation.setParams({ showFilterScreen: this.showFilterScreen });
 
       const games = this.handleGetGamesResponse(response);
       this.setState({
@@ -84,6 +101,12 @@ export default class App extends React.Component {
     navigate('Info', item);
   }
 
+  closeFilter = () => {
+    this.setState({
+      showFilterScreen: false,
+    })
+  }
+
   fetchNextGames = async () => {
     const { games } = this.state;
     const offset = games.length;
@@ -96,7 +119,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { games, loading } = this.state;
+    const { games, loading, showFilterScreen } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -109,6 +132,10 @@ export default class App extends React.Component {
           fetchNextGames={this.fetchNextGames}
           onItemPress={this.onItemPress}
           data={games}
+        />
+        <Filter
+          onBackdropPress={this.closeFilter}
+          isVisible={showFilterScreen}
         />
       </SafeAreaView>
     );
