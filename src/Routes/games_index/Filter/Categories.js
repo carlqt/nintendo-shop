@@ -24,16 +24,14 @@ export default class Categories extends PureComponent {
     return false;
   }
 
-  renderCategory = (category) => {
-    return(
-      <Category
-        {...category}
-        key={category.display}
-        selected={this.isSelected(category)}
-        onPress={this.toggleCategory}
-      />
-    )
-  }
+  renderCategory = category => (
+    <Category
+      {...category}
+      key={category.display}
+      selected={this.isSelected(category)}
+      onPress={this.toggleCategory}
+    />
+  )
 
   render() {
     const categories = [
@@ -73,16 +71,16 @@ export default class Categories extends PureComponent {
         display: 'Education',
         value: 'education',
       },
-    ]
+    ];
 
-    return(
+    return (
       <View style={styles.container}>
         <Text style={styles.header}>Categories</Text>
         <View style={styles.categoriesContainer}>
           { categories.map(this.renderCategory) }
         </View>
       </View>
-    )
+    );
   }
 }
 

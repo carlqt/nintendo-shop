@@ -20,17 +20,7 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      games: [],
-      loading: true,
-      showFilterScreen: false,
-    }
-  }
-
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     const toggleSearchBar = navigation.getParam('toggleSearchBar', null);
     const showFilterScreen = navigation.getParam('showFilterScreen', null);
 
@@ -43,29 +33,26 @@ export default class App extends React.Component {
         color: 'white',
       },
       headerRight: (
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={showFilterScreen} style={{paddingHorizontal: 9}}>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={showFilterScreen} style={{ paddingHorizontal: 9 }}>
             <Icon color="white" size={20} name="filter" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={toggleSearchBar} style={{paddingHorizontal: 9}}>
+          <TouchableOpacity onPress={toggleSearchBar} style={{ paddingHorizontal: 9 }}>
             <Icon color="white" size={20} name="search" />
           </TouchableOpacity>
         </View>
       ),
+    };
+  }
+
+  constructor() {
+    super();
+
+    this.state = {
+      games: [],
+      loading: true,
+      showFilterScreen: false,
     }
-  }
-
-  showFilterScreen = () => {
-    const { showFilterScreen } = this.state;
-
-    this.setState({
-      showFilterScreen: true,
-    });
-  }
-
-  toggleSearchBar = () => {
-    const { navigate } = this.props.navigation;
-    navigate('Search');
   }
 
   async componentDidMount() {
@@ -83,6 +70,17 @@ export default class App extends React.Component {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  showFilterScreen = () => {
+    this.setState({
+      showFilterScreen: true,
+    });
+  }
+
+  toggleSearchBar = () => {
+    const { navigate } = this.props.navigation;
+    navigate('Search');
   }
 
   handleGetGamesResponse = (response) => {
@@ -127,7 +125,7 @@ export default class App extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar translucent backgroundColor='#f47b2b' barStyle="light-content" />
+        <StatusBar translucent backgroundColor="#f47b2b" barStyle="light-content" />
         <GamesList
           fetchNextGames={this.fetchNextGames}
           onItemPress={this.onItemPress}
