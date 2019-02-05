@@ -9,3 +9,13 @@ export const CATEGORIES = {
   simulation: 'Simulation',
   education: 'Education',
 };
+
+export const STATUS = {
+  sale: 'On Sale',
+  // 'Demo Available',
+  // 'DLC Available',
+  // 'New Releases',
+  // 'Available Now',
+  // 'Coming Soon',
+  // 'Pre Purchase',
+};

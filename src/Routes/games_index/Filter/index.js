@@ -3,16 +3,34 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
 
 import Categories from './Categories';
+import Status from './Status';
 
 export default class Filter extends Component {
   constructor(props) {
     super(props);
 
-    const { appliedFilters: { category }} = props;
+    const { appliedFilters: { category, status }} = props;
 
     this.state = {
       categories: category,
+      status,
     };
+  }
+
+  addStatus = (statusItem) => {
+    const { status } = this.state;
+
+    this.setState({
+      status: status.concat(statusItem),
+    });
+  }
+
+  removeStatus = (statusItem) => {
+    const { status } = this.state;
+
+    this.setState({
+      status: status.filter(s => s !== statusItem),
+    });
   }
 
   removeCategory = (category) => {
@@ -35,9 +53,10 @@ export default class Filter extends Component {
     const { applyFilter, onBackdropPress } = this.props;
     const {
       categories: category,
+      status,
     } = this.state;
 
-    applyFilter({ category });
+    applyFilter({ category, status });
     onBackdropPress();
   }
 
@@ -45,7 +64,7 @@ export default class Filter extends Component {
     const {
       onBackdropPress,
     } = this.props;
-    const { categories } = this.state;
+    const { categories, status } = this.state;
 
     return (
       <Overlay
@@ -60,6 +79,11 @@ export default class Filter extends Component {
             addCategory={this.addCategory}
             removeCategory={this.removeCategory}
             {...{ categories }}
+          />
+          <Status
+            addStatus={this.addStatus}
+            removeStatus={this.removeStatus}
+            {...{ status }}
           />
           <View style={styles.footer}>
             <View style={styles.footerFlexContainer}>

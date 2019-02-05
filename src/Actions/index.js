@@ -13,11 +13,17 @@ function flatten(a, b) {
 }
 
 function encodeParams(val) {
+  let params;
+
   if (FILTER_PARAMS.includes(val)) {
-    return this[val].map(v => `${encodeURIComponent(val)}=${encodeURIComponent(v)}`);
+    params = this[val].map(v => `${encodeURIComponent(val)}=${encodeURIComponent(v)}`);
+  } else if (val === 'status') {
+    params = this[val].map(v => `${encodeURIComponent(v)}=${encodeURIComponent(true)}`);
+  } else {
+    params = `${encodeURIComponent(val)}=${encodeURIComponent(this[val])}`;
   }
 
-  return `${encodeURIComponent(val)}=${encodeURIComponent(this[val])}`;
+  return params;
 }
 
 function encodedParams(params) {
@@ -40,6 +46,7 @@ export async function getGames(params = {}) {
       ...params,
     };
 
+    console.log(urlParams);
     const url = `${gamesListURL}?${encodedParams(urlParams)}`;
     const response = await fetch(url);
     const jsonResponse = await response.json();
