@@ -60,8 +60,10 @@ export default class App extends React.Component {
 
   componentDidMount() {
     try {
-      this.props.navigation.setParams({ toggleSearchBar: this.toggleSearchBar });
-      this.props.navigation.setParams({ showFilterScreen: this.showFilterScreen });
+      const { navigation: { setParams }} = this.props;
+
+      setParams({ toggleSearchBar: this.toggleSearchBar });
+      setParams({ showFilterScreen: this.showFilterScreen });
       this.loadGames();
     } catch (e) {
       console.log(e);
@@ -77,10 +79,17 @@ export default class App extends React.Component {
     });
   }
 
-  applyFilter = async (filters) => {
-    this.setState({ filters, loading: true });
+  applyFilter = async (newFilters) => {
+    const { filters } = this.state;
+    const mergedFilters = Object.assign(filters, newFilters);
+
+    this.setState({
+      filters: mergedFilters,
+      loading: true,
+    });
+
     this.loadGames({
-      ...filters,
+      ...mergedFilters,
     });
   }
 
