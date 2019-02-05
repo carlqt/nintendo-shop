@@ -12,8 +12,8 @@ export const CATEGORIES = {
 
 export const STATUS = {
   sale: 'On Sale',
-  // 'Demo Available',
-  // 'DLC Available',
+  demo: 'Demo Available',
+  dlc: 'DLC Available',
   // 'New Releases',
   // 'Available Now',
   // 'Coming Soon',

@@ -46,7 +46,6 @@ export async function getGames(params = {}) {
       ...params,
     };
 
-    console.log(urlParams);
     const url = `${gamesListURL}?${encodedParams(urlParams)}`;
     const response = await fetch(url);
     const jsonResponse = await response.json();

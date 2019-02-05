@@ -107,12 +107,17 @@ export default class App extends React.Component {
 
   handleGetGamesResponse = (response) => {
     const { games: { game } } = response;
+    let handledResponse;
 
-    if (Array.isArray(game)) {
-      return game;
+    if (game === undefined) {
+      handledResponse = [];
+    } else if (Array.isArray(game)) {
+      handledResponse = game;
+    } else {
+      handledResponse = [game];
     }
 
-    return [game];
+    return handledResponse;
   }
 
   onItemPress = (item) => {
