@@ -8,12 +8,16 @@
   },
   "dependencies": {
     "expo": "^32.0.0",
+    "immer": "^2.0.0",
     "nintendo-switch-eshop": "^2.0.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^1.0.0-beta8",
     "react-native-vector-icons": "^6.2.0",
     "react-navigation": "^3.0.9",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
