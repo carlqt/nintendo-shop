@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Overlay, Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Categories from './Categories';
 import Status from './Status';
 
 export default class Filter extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Filter',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 12 }}>
+          <Icon size={36} name="ios-close" />
+        </TouchableOpacity>
+      ),
+      headerRight: (
+        <TouchableOpacity style={{ marginRight: 12 }}>
+          <Text style={{ fontWeight: '600', color: 'blue' }}>Reset</Text>
+        </TouchableOpacity>
+      ),
+    };
+  }
+
   constructor(props) {
     super(props);
 
-    const { appliedFilters: { category, status }} = props;
-
     this.state = {
-      categories: category,
-      status,
+      categories: [],
+      status: [],
     };
   }
 
@@ -61,49 +76,21 @@ export default class Filter extends Component {
   }
 
   render() {
-    const {
-      onBackdropPress,
-    } = this.props;
     const { categories, status } = this.state;
 
     return (
-      <Overlay
-        isVisible
-        {...{ onBackdropPress }}
-      >
-        <View style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>Filter</Text>
-          </View>
-          <Categories
-            addCategory={this.addCategory}
-            removeCategory={this.removeCategory}
-            {...{ categories }}
-          />
-          <Status
-            addStatus={this.addStatus}
-            removeStatus={this.removeStatus}
-            {...{ status }}
-          />
-          <View style={styles.footer}>
-            <View style={styles.footerFlexContainer}>
-              <Button
-                raised
-                title="Apply"
-                type="solid"
-                onPress={this.applyFilter}
-              />
-              <Button
-                raised
-                onPress={onBackdropPress}
-                containerStyle={{ marginHorizontal: 4 }}
-                title="Cancel"
-                type="outline"
-              />
-            </View>
-          </View>
-        </View>
-      </Overlay>
+      <ScrollView style={styles.container}>
+        <Status
+          {...{ status }}
+          addStatus={this.addStatus}
+          removeStatus={this.removeStatus}
+        />
+        <Categories
+          {...{ categories }}
+          addCategory={this.addCategory}
+          removeCategory={this.removeCategory}
+        />
+      </ScrollView>
     );
   }
 }
@@ -111,6 +98,7 @@ export default class Filter extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
   },
   headerContainer: {
     paddingVertical: 8,

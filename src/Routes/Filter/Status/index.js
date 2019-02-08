@@ -44,8 +44,8 @@ export default class Status extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 12,
     flex: 1,
+    marginBottom: 12,
   },
   itemContainer: {
     flex: 1,
@@ -54,5 +54,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: '600',
+    fontSize: 18,
+    marginBottom: 12,
   },
 });

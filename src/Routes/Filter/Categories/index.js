@@ -7,6 +7,14 @@ import {
 } from '../Constants';
 
 export default class Categories extends PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      categories: [],
+    }
+  }
+
   toggleCategory = (category) => {
     const { addCategory, removeCategory } = this.props;
 
@@ -46,8 +54,8 @@ export default class Categories extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 12,
     flex: 1,
+    marginBottom: 12,
   },
   categoriesContainer: {
     flex: 1,
@@ -56,5 +64,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: '600',
+    fontSize: 18,
+    marginBottom: 12,
   },
 });

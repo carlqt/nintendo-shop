@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Loading from 'src/Components/loading';
 import GamesList from 'src/Routes/Games';
-import Filter from './Filter';
 
 const styles = StyleSheet.create({
   container: {
@@ -95,9 +94,14 @@ export default class App extends React.Component {
   }
 
   showFilterScreen = () => {
-    this.setState({
-      showFilterScreen: true,
-    });
+    // this.setState({
+    //   showFilterScreen: true,
+    // });
+    const { filters } = this.state;
+    const { navigation: { setParams, navigate }} = this.props;
+
+    setParams({ filters });
+    navigate('Filter');
   }
 
   toggleSearchBar = () => {
@@ -126,12 +130,6 @@ export default class App extends React.Component {
     navigate('Info', item);
   }
 
-  closeFilter = () => {
-    this.setState({
-      showFilterScreen: false,
-    });
-  }
-
   fetchNextGames = async () => {
     const { games, filters } = this.state;
     const offset = games.length;
@@ -146,24 +144,24 @@ export default class App extends React.Component {
     });
   }
 
-  renderFilterScreen = () => {
-    const {
-      showFilterScreen,
-      filters,
-    } = this.state;
+  // renderFilterScreen = () => {
+  //   const {
+  //     showFilterScreen,
+  //     filters,
+  //   } = this.state;
 
-    if (!showFilterScreen) {
-      return null;
-    }
+  //   if (!showFilterScreen) {
+  //     return null;
+  //   }
 
-    return (
-      <Filter
-        appliedFilters={filters}
-        applyFilter={this.applyFilter}
-        onBackdropPress={this.closeFilter}
-      />
-    );
-  }
+  //   return (
+  //     <Filter
+  //       appliedFilters={filters}
+  //       applyFilter={this.applyFilter}
+  //       onBackdropPress={this.closeFilter}
+  //     />
+  //   );
+  // }
 
   render() {
     const {
@@ -183,7 +181,6 @@ export default class App extends React.Component {
           onItemPress={this.onItemPress}
           data={games}
         />
-        { this.renderFilterScreen() }
       </SafeAreaView>
     );
   }
