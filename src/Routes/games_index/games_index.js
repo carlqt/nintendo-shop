@@ -43,18 +43,6 @@ export default class App extends React.Component {
     };
   }
 
-  constructor() {
-    super();
-
-    this.state = {
-      filters: {
-        category: [],
-        status: [],
-      },
-      loading: true,
-    };
-  }
-
   componentDidMount() {
     try {
       const { navigation: { setParams }} = this.props;
@@ -68,42 +56,38 @@ export default class App extends React.Component {
   }
 
   fetchNextGames = async () => {
-    const { getNextGames, gamesStore } = this.props;
-    const offset = gamesStore.length;
+    const { getNextGames, gamesStore, filters } = this.props;
+    const { games } = gamesStore;
+    const offset = games.length;
 
-    getNextGames(offset);
+    getNextGames({
+      ...filters,
+      offset,
+    });
   }
 
-  loadGames = async () => {
+  loadGames = async (params = {}) => {
     const { loadGames } = this.props;
-
-    const response = await loadGames();
-
-    if (response.ok) {
-      this.setState({
-        loading: false,
-      });
-    }
+    loadGames(params);
   }
 
-  applyFilter = async (newFilters) => {
-    const { filters } = this.state;
-    const mergedFilters = Object.assign(filters, newFilters);
+  applyFilter = async (filters) => {
+    this.setState({ loading: true });
+    this.loadGames(filters);
+  }
 
-    this.setState({
-      filters: mergedFilters,
-      loading: true,
-    });
-
-    this.loadGames({
-      ...mergedFilters,
-    });
+  resetFilter = async () => {
+    this.setState({ loading: true });
+    this.loadGames();
   }
 
   showFilterScreen = () => {
     const { navigation: { navigate }} = this.props;
 
-    navigate('Filter');
+    navigate('Filter', {
+      applyFilter: this.applyFilter,
+      resetFilter: this.resetFilter,
+    });
   }
 
   toggleSearchBar = () => {
@@ -118,8 +102,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { loading } = this.state;
-    const { gamesStore: games } = this.props;
+    const { gamesStore: { games, loading } } = this.props;
 
     if (loading) {
       return <Loading />;

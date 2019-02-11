@@ -3,8 +3,8 @@ import { loadGames, getNextGames } from 'src/Store/Games/actions';
 import GamesIndex from './games_index';
 
 const mapStateToProps = state => ({
-  gamesStore: state.gamesStore.games,
-  filters: state.gamesStore.filters,
+  gamesStore: state.gamesStore,
+  filters: state.filterStore,
 });
 
 const mapDispatchToProps = {

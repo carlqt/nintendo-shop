@@ -9,10 +9,10 @@ export default class Status extends PureComponent {
     const { addStatus, removeStatus } = this.props;
 
     if (this.isSelected(status)) {
-      return removeStatus(status);
+      return removeStatus(status, 'status');
     }
 
-    return addStatus(status);
+    return addStatus(status, 'status');
   }
 
   isSelected = (statusItem) => {

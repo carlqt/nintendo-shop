@@ -4,7 +4,12 @@ import {
   defaultFilterParams,
 } from './constants';
 
-export const loadGames = (params = {}) => async (dispatch) => {
+export const loadGames = params => async (dispatch) => {
+  dispatch({
+    type: 'SET_LOADING',
+    data: { loading: true },
+  });
+
   const response = await getGames(params);
 
   return dispatch({
@@ -14,8 +19,8 @@ export const loadGames = (params = {}) => async (dispatch) => {
   });
 };
 
-export const getNextGames = offset => async (dispatch) => {
-  const response = await getGames({ offset });
+export const getNextGames = params => async (dispatch) => {
+  const response = await getGames(params);
 
   dispatch({
     type: 'ADD_GAMES',

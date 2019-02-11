@@ -19,10 +19,10 @@ export default class Categories extends PureComponent {
     const { addCategory, removeCategory } = this.props;
 
     if (this.isSelected(category)) {
-      return removeCategory(category);
+      return removeCategory(category, 'categories');
     }
 
-    return addCategory(category);
+    return addCategory(category, 'categories');
   }
 
   isSelected = (category) => {
