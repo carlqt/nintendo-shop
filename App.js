@@ -8,19 +8,41 @@ import GameInfoScreen from './src/Routes/GameInfo';
 import SearchScreen from './src/Routes/Search';
 import FilterScreen from './src/Routes/Filter';
 
-const AppNavigator = createStackNavigator(
+const MainStack = createStackNavigator(
   {
     Home: GamesIndex,
     Info: GameInfoScreen,
     Search: SearchScreen,
-    Filter: FilterScreen,
   },
   {
     initialRouteName: 'Home',
+    headerMode: 'screen',
+    modal: 'card',
   },
 );
 
-const AppContainer = createAppContainer(AppNavigator);
+const FilterStack = createStackNavigator(
+  {
+    Filter: FilterScreen,
+  },
+);
+
+const RootStack = createStackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    Filter: {
+      screen: FilterStack,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {

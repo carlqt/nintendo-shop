@@ -14,7 +14,7 @@ export default class Filter extends Component {
     return {
       title: 'Filter',
       headerLeft: (
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 12 }}>
+        <TouchableOpacity onPress={() => navigation.pop()} style={{ marginLeft: 12 }}>
           <Icon size={36} name="ios-close" />
         </TouchableOpacity>
       ),
@@ -47,11 +47,11 @@ export default class Filter extends Component {
     const {
       resetFilter,
       loadGames,
-      navigation: { goBack },
+      navigation: { pop },
     } = this.props;
 
     resetFilter();
-    goBack();
+    pop();
     loadGames();
   }
 
@@ -67,7 +67,7 @@ export default class Filter extends Component {
       category,
       status,
     });
-    navigation.goBack();
+    navigation.pop();
   }
 
   addFilterItem = (item, type) => {
