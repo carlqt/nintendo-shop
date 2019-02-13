@@ -6,6 +6,7 @@ import { produce } from 'immer';
 
 import Categories from './Categories';
 import Status from './Status';
+import Sort from './Sort';
 
 export default class Filter extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -107,6 +108,7 @@ export default class Filter extends Component {
 
     return (
       <ScrollView style={styles.container}>
+        <Sort />
         <Status
           {...{ status }}
           addStatus={this.addFilterItem}
