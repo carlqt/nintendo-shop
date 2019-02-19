@@ -35,6 +35,10 @@ function flatten(a, b) {
 function encodeParams(val) {
   let params;
 
+  if (this[val] === undefined) {
+    return;
+  }
+
   if (FILTER_PARAMS.includes(val)) {
     params = this[val].map(v => `${encodeURIComponent(val)}=${encodeURIComponent(v)}`);
   } else if (val === 'status') {
@@ -77,6 +81,7 @@ const getGames = async (params = {}) => {
   };
 
   const url = `${gamesListURL}?${encodedParams(urlParams)}`;
+  console.log(url);
   const response = await fetch(url);
   return response.json();
 };

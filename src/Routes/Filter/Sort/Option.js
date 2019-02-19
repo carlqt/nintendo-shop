@@ -4,23 +4,8 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 export default class Option extends PureComponent {
   onPress = () => {
-    const { selected } = this.props;
-
-    if (selected) {
-      this.unselect();
-    } else {
-      this.select();
-    }
-  }
-
-  unselect = () => {
-    const { onPress } = this.props;
-    onPress(null);
-  }
-
-  select = () => {
-    const { value, onPress} = this.props;
-    onPress(value);
+    const { value, onPress } = this.props;
+    onPress(value, 'des');
   }
 
   render() {

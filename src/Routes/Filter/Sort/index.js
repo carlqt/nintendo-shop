@@ -3,31 +3,24 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import Option from './Option';
+import OptionWithDirection from './OptionWithDirection';
 
 export default class Sort extends PureComponent {
-  constructor() {
-    super();
-
-    this.state = {
-      sort: null,
-      direction: null,
-    }
-  }
-
   setSort = (sort, direction) => {
-    this.setState({
-      sort,
-      direction,
-    })
+    const { onPress } = this.props;
+
+    onPress(sort, direction);
   }
 
   isSelected = (option) => {
-    const { sort } = this.state;
+    const { sort } = this.props;
 
     return sort === option ? true : false;
   }
 
   render() {
+    const { direction } = this.props;
+
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Sort by</Text>
@@ -46,18 +39,18 @@ export default class Sort extends PureComponent {
             onPress={this.setSort}
           />
 
-          <Option
+          <OptionWithDirection
+            {...{ direction }}
             value="price"
             selected={this.isSelected('price')}
-            direction
             style={styles.option}
             onPress={this.setSort}
           />
 
-          <Option
+          <OptionWithDirection
+            {...{ direction }}
             value="title"
             selected={this.isSelected('title')}
-            direction
             style={[styles.option, styles.optionEnd]}
             onPress={this.setSort}
           />

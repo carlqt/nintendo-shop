@@ -30,11 +30,18 @@ export default class Filter extends Component {
   constructor(props) {
     super(props);
 
-    const { category: categories, status } = props.filters;
+    const {
+      category: categories,
+      status,
+      direction,
+      sort,
+    } = props.filters;
 
     this.state = {
       categories,
       status,
+      direction,
+      sort,
     };
   }
 
@@ -61,12 +68,16 @@ export default class Filter extends Component {
     const {
       categories: category,
       status,
+      direction,
+      sort,
     } = this.state;
 
-    setFilter({ category, status });
+    setFilter({ category, status, direction, sort });
     loadGames({
       category,
       status,
+      direction,
+      sort,
     });
     navigation.pop();
   }
@@ -79,6 +90,15 @@ export default class Filter extends Component {
     );
   }
 
+  setSortProperty = (sort, direction) => {
+    this.setState(
+      produce((draft) => {
+        draft.sort = sort;
+        draft.direction = direction;
+      })
+    );
+  }
+
   removeFilterItem = (item, type) => {
     this.setState(
       produce((draft) => {
@@ -87,28 +107,20 @@ export default class Filter extends Component {
     );
   }
 
-  removeCategory = (category) => {
-    const { categories } = this.state;
-
-    this.setState({
-      categories: categories.filter(c => c !== category),
-    });
-  }
-
-  addCategory = (category) => {
-    const { categories } = this.state;
-
-    this.setState({
-      categories: categories.concat(category),
-    });
-  }
-
   render() {
-    const { categories, status } = this.state;
+    const {
+      categories,
+      status,
+      direction,
+      sort,
+    } = this.state;
 
     return (
       <ScrollView style={styles.container}>
-        <Sort />
+        <Sort
+          {...{ sort, direction }}
+          onPress={this.setSortProperty}
+        />
         <Status
           {...{ status }}
           addStatus={this.addFilterItem}

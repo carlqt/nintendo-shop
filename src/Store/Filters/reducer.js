@@ -3,6 +3,8 @@ import { produce } from 'immer';
 const initialState = {
   status: [],
   category: [],
+  sort: 'title',
+  direction: 'asc',
 };
 
 export default function (state = initialState, action) {

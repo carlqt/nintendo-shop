@@ -25,6 +25,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Work In Progress\n\nA simple nintendo-eshop viewer for mobile"
+    "description": "WIP\n\nView Nintendo switch games from the e-shop. You can sort and filter the view for easy browsing."
   }
 }
