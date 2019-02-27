@@ -18,19 +18,37 @@ export default class Contents extends PureComponent {
     );
   }
 
+  getImageURL = () => {
+    const {
+      large_icon: largeIcon,
+      front_box_art: boxArt,
+    } = this.props;
+
+    let url;
+
+    if (largeIcon) {
+      url = largeIcon.image.url;
+    } else {
+      url = boxArt.image.image.url;
+    }
+
+    return url;
+  }
+
   render() {
     const {
       title,
-      large_icon: largeIcon,
       release_date: releaseDate,
       game_category_ref: categories,
       number_of_players: numberOfPlayers,
     } = this.props;
 
+    const imageURL = this.getImageURL();
+
     return(
       <Fragment>
         <Hero
-          source={largeIcon}
+          source={imageURL}
         />
 
         <View style={styles.contents}>
