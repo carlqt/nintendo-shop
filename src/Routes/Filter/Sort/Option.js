@@ -11,7 +11,7 @@ export default class Option extends PureComponent {
   render() {
     const display = {
       featured: 'Featured',
-      date: 'Release Date',
+      release: 'Release Date',
       price: 'Price',
       title: 'Title',
     };

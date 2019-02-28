@@ -33,8 +33,8 @@ export default class Sort extends PureComponent {
           />
 
           <Option
-            value="date"
-            selected={this.isSelected('date')}
+            value="release"
+            selected={this.isSelected('release')}
             style={styles.option}
             onPress={this.setSort}
           />
