@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView ,StyleSheet, Text, View } from 'react-native';
 
-import { getGameInfo } from 'src/Actions';
+import { getGameInfo, getScreenshots } from 'src/Actions';
 import Loading from 'src/Components/loading';
 import Contents from './Contents';
 
@@ -12,6 +12,7 @@ export default class GameInfo extends React.Component {
     this.state = {
       game: null,
       loading: true,
+      screenshots: [],
     }
   }
 
@@ -21,6 +22,7 @@ export default class GameInfo extends React.Component {
       const id = navigation.getParam('id');
 
       const resp = await getGameInfo(id);
+      this.loadScreenshots(resp.game.slug);
 
       this.setState({
         game: resp.game,
@@ -40,8 +42,17 @@ export default class GameInfo extends React.Component {
     };
   }
 
+  loadScreenshots = async (slug) => {
+    const resp = await getScreenshots(slug);
+    this.setState(prevState => ({
+      ...prevState,
+      screenshots: resp.Source,
+    }));
+  }
+
   render() {
     const { loading, game } = this.state;
+    console.log(this.state);
 
     if (loading) {
       return <Loading />;

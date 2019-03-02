@@ -41,6 +41,8 @@ export default class Contents extends PureComponent {
       release_date: releaseDate,
       game_category_ref: categories,
       number_of_players: numberOfPlayers,
+      id,
+      slug,
     } = this.props;
 
     const imageURL = this.getImageURL();

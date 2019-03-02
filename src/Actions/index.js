@@ -12,6 +12,13 @@ function flatten(a, b) {
   return a.concat(b);
 }
 
+export async function getScreenshots(id) {
+  const url = `http://192.168.254.106:8000/screenshots/${id}`;
+
+  const response = await fetch(url);
+  return response.json();
+}
+
 function encodeParams(val) {
   let params;
 

@@ -3,6 +3,7 @@
 
 export const gameInfoURL = "https://www.nintendo.com/json/content/get/game"
 export const gamesListURL = `https://www.nintendo.com/json/content/get/filter/game`;
+export const gameInfoHTML = 'https://www.nintendo.com/games/detail'
 
 // Index searching
 export const ALGOLIA_API_KEY = '36a8038135ce30ec9b593cc8b2026e44'
